@@ -112,13 +112,22 @@ public class Launcher {
 //		logger.warn(bear.getCave());
 		
 		//Create bears for Cascade
-		List<Bear> bears = new ArrayList<>();
-		bears.add(new Bear(0, "female", "Panda", LocalDate.now(), 1000));
-		bears.add(new Bear(0, "female", "Brown Bear", LocalDate.now(), 1000));
+//		List<Bear> bears = new ArrayList<>();
+//		bears.add(new Bear(0, "female", "Panda", LocalDate.now(), 1000));
+//		bears.add(new Bear(0, "female", "Brown Bear", LocalDate.now(), 1000));
+//		
+//		//Cascade operations to bear list in cave
+//		Cave cave = new Cave(0, "Luminous Cave", "Canada", 10000, bears);
+//		caveDao.insertCave(cave);
 		
-		//Cascade operations to bear list in cave
-		Cave cave = new Cave(0, "Luminous Cave", "Canada", 10000, bears);
-		caveDao.insertCave(cave);
+		//Assign cubs to Parent Bears
+		Bear bear = bearDao.loadBear(1); //load bears
+		Bear cubA = bearDao.loadBear(2);
+		Bear cubB = bearDao.loadBear(3);
+		
+		bearDao.addCubs(bear,  cubA, cubB);
+		
+		bearDao.updateBear(bear);
 	}
 	
 

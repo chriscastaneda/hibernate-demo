@@ -1,5 +1,6 @@
 package com.revature.daos;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +82,25 @@ public class BearDao {
 				List <Bear> bears = cave.getBears(); //Extract list of bears
 				Hibernate.initialize(bears); //initialize bear collection
 				return bears;
+			}
+		}
+		
+		//Assign cubs to Bears
+		public void addCubs(Bear bear, Bear... cubs) {
+			try(Session session = sf.openSession()){
+				bear = session.get(Bear.class, bear.getId());
+				Transaction tx = session.beginTransaction();
+				
+				if(bear.getCubs() == null) { //create list of cubs if none available
+					bear.setCubs(new ArrayList<Bear>());
+				}
+				
+				for(Bear cub : cubs) {
+					bear.getCubs().add(cub); //add in cubs
+				}
+				
+				session.merge(bear);
+				tx.commit();
 			}
 		}
 }
